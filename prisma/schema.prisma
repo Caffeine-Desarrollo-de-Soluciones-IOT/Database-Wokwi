@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Sensor {
+  id            Int             @id @default(autoincrement())
+  tipo          String
+  estado        String
+  lecturaActual Float
+  lecturas      LecturaSensor[] // Relación con lecturas de sensores
+}
+
+model LecturaSensor {
+  id        Int       @id @default(autoincrement())
+  sensorId  Int       
+  valor     Float
+  unidad    String
+  timestamp DateTime  @default(now())
+
+  sensor Sensor @relation(fields: [sensorId], references: [id])
+}
+
+model Actuador {
+  id         Int             @id @default(autoincrement())
+  tipo       String
+  estado     String
+  comandos   ComandoActuador[] // Relación con comandos de actuadores
+}
+
+model ComandoActuador {
+  id          Int      @id @default(autoincrement())
+  actuadorId  Int      
+  tipoComando String
+  parametro   String?
+
+  actuador Actuador @relation(fields: [actuadorId], references: [id])
+}
