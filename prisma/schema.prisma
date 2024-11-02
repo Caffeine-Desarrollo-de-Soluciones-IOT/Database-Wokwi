@@ -42,7 +42,7 @@ model ComandoActuador {
   id          Int      @id @default(autoincrement())
   actuadorId  Int      
   tipoComando String
-  parametro   String?
+  parametro   String
 
   actuador Actuador @relation(fields: [actuadorId], references: [id])
 }
