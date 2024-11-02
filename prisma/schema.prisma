@@ -15,34 +15,34 @@ datasource db {
 
 model Sensor {
   id            Int             @id @default(autoincrement())
-  tipo          String
-  estado        String
-  lecturaActual Float
-  lecturas      LecturaSensor[] // Relación con lecturas de sensores
+  type          String
+  status        String
+  currentReading Float
+  readings      ReadingSensor[]
 }
 
-model LecturaSensor {
+model ReadingSensor {
   id        Int       @id @default(autoincrement())
   sensorId  Int       
-  valor     Float
-  unidad    String
+  value     Float
+  unit    String
   timestamp DateTime  @default(now())
 
   sensor Sensor @relation(fields: [sensorId], references: [id])
 }
 
-model Actuador {
+model Actuator {
   id         Int             @id @default(autoincrement())
-  tipo       String
-  estado     String
-  comandos   ComandoActuador[] // Relación con comandos de actuadores
+  type       String
+  status      String
+  commands   CommandActuator[]
 }
 
-model ComandoActuador {
+model CommandActuator {
   id          Int      @id @default(autoincrement())
-  actuadorId  Int      
-  tipoComando String
-  parametro   String
+  actuatorId  Int      
+  typeCommand String
+  parameter   String
 
-  actuador Actuador @relation(fields: [actuadorId], references: [id])
+  actuator Actuator @relation(fields: [actuatorId], references: [id])
 }
