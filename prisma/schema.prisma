@@ -18,6 +18,7 @@ model Sensor {
   type          String
   status        String
   currentReading Float
+  macAddress     String          @unique
   readings      ReadingSensor[]
 }
 
